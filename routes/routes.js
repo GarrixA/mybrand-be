@@ -1,5 +1,5 @@
     const express = require("express")
-    const Blog = require("../model/blogScheme") // new
+    const Blog = require("../model/blogScheme")
     const router = express.Router()
     
     // Get all blog
@@ -14,9 +14,8 @@
         try {
         
             const blog = new Blog({
-                title: req.body.title,
-                summary: req.body.summary,
-                description: req.body.description,
+                blogTitle: req.body.blogTitle,
+                blogDescription: req.body.blogDescription,
             })
             await blog.save()
             res.send(blog)
@@ -29,7 +28,7 @@
     
       // get one blog
 
-      router.get("/blogs/getOne/:id", async (req, res) => {
+      router.get("/blogs/getSingleBlog/:id", async (req, res) => {
         try {
             const blog = await Blog.findOne({ _id: req.params.id })
             res.send(blog)
@@ -41,20 +40,16 @@
 
     //update blog
 
-    router.patch("/blog/update/:id", async (req, res) => {
+    router.patch("/blogs/update/:id", async (req, res) => {
         try {
             const blog = await Blog.findOne({ _id: req.params.id })
     
-            if (req.body.title) {
-                blog.title = req.body.title
-            }
-    
-            if (req.body.summary) {
-                blog.summary = req.body.summary
+            if (req.body.blogTitle) {
+                blog.blogTitle = req.body.blogTitle
             }
            
-            if (req.body.description) {
-                blog.description = req.body.description
+            if (req.body.blogDescription) {
+                blog.blogDescription = req.body.blogDescription
             }
             await blog.save()
             res.send(blog)

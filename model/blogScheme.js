@@ -1,9 +1,14 @@
 const mongoose = require("mongoose")
     
     const schema = mongoose.Schema({
-       title:String,
-        summary:String,
-        description:String
+        blogTitle: {
+            type: String,
+            required: true
+        },
+        blogDescription: {
+            type: String,
+            required: true
+        }
 
     }, { timestamps: true })
     
