@@ -1,15 +1,12 @@
-    const express = require("express")
-    const mongoose = require("mongoose")
-    const routes = require("./routes/routes")
-    
-    mongoose
-        .connect("mongodb://localhost:27017/my_blogs_be", { useNewUrlParser: true })
-        .then(() => {
-            const app = express()
-            app.use(express.json())
-            app.use("/api", routes)
-    
-            app.listen(5000, () => {
-                console.log("Server has started!")
-            })
-        })
+const app = require('./app.js');
+const { mongoConnect } = require('./src/services/mongoConnection.js');
+
+const startServer = async () => {
+  await mongoConnect();
+
+  app.listen(8080, () => {
+    console.log('server is listening ..... 8080');
+  });
+};
+
+startServer();
