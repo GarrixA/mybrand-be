@@ -1,8 +1,8 @@
 const express = require('express');
-const movieRoutes = require('./blog.routes');
+const blogRoutes = require('./blog.routes');
 
 const apiRouter = express.Router();
 
-apiRouter.use('/blog', movieRoutes);
+apiRouter.use('/blog', blogRoutes);
 
 module.exports = apiRouter;

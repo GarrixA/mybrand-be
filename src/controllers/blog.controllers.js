@@ -20,9 +20,34 @@ const httpGetBlogs = async (req, res) => {
 };
 
 // get one blog
-const  httpGetOneBlog = async (req, res) => {
-  const oneBlog = await Blog.findOne({_id: req.params.id});
-  res.status(200).json({message: "Success", data: oneBlog})
+const httpGetOneBlog = async (req, res) => {
+  const oneBlog = await Blog.findOne({ _id: req.params.id });
+  res.status(200).json({ message: "Success", data: oneBlog })
 }
 
-module.exports = { httpCreateBlog, httpGetBlogs, httpGetOneBlog };
+// update blog
+const httpUpdateBlog = async (req, res) => {
+  const updatedBlog = await Blog.findOne({ _id: req.params.id });
+  if (req.body.title) {
+    updatedBlog.title = req.body.title
+  }
+
+  if (req.body.description) {
+    updatedBlog.description = req.body.description
+  }
+  await updatedBlog.save()
+  res.send(updatedBlog)
+  res.status(200).json({ message: "Blog updated successfully" })
+}
+
+// delete blog
+
+const httpDeleteBlog = async (req, res) => {
+  try {
+    await Blog.deleteOne({ _id: req.params.id })
+    res.status(204).send() 
+  } catch (error) {
+    console.log(error)
+  }
+}
+module.exports = { httpCreateBlog, httpGetBlogs, httpGetOneBlog, httpUpdateBlog, httpDeleteBlog };
