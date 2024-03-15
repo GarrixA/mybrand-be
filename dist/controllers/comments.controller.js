@@ -67,6 +67,24 @@ const httpGetCommentsOfBlog = (req, res) => __awaiter(void 0, void 0, void 0, fu
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
+// Update Comment
+const httpUpdateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const commentId = req.params.commentId;
+        const content = req.body.content;
+        const comment = yield commentSchema_1.default.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({ error: "Comment not found" });
+        }
+        comment.content = content;
+        yield comment.save();
+        res.status(200).json({ message: "Comment updated successfully", comment });
+    }
+    catch (error) {
+        console.error("Error updating comment:", error.message);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 // delete a comment on blog
 const httpDeleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -82,4 +100,4 @@ const httpDeleteComment = (req, res) => __awaiter(void 0, void 0, void 0, functi
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
-exports.default = { httpCreateComment, httpGetCommentsOfBlog };
+exports.default = { httpCreateComment, httpGetCommentsOfBlog, httpUpdateComment, httpDeleteComment };

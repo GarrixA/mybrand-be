@@ -8,4 +8,6 @@ const validateComment = (commentData: any) =>{
     return commentSchema.validate(commentData);
 }
 
+
+
 export default validateComment;

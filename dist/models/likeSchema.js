@@ -8,6 +8,6 @@ const schema = mongoose_1.default.Schema;
 const LikeSchema = new schema({
     like: {
         type: String,
-    }
+    },
 });
-exports.default = mongoose_1.default.model('Like', LikeSchema);
+exports.default = mongoose_1.default.model("Like", LikeSchema);

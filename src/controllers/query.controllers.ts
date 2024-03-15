@@ -1,4 +1,4 @@
-import { Request, Response, query } from "express";
+import { Request, Response } from "express";
 import Query from "../models/querySchema";
 
 //create queries
@@ -36,7 +36,6 @@ const httpGetOneQuery = async(req: Request, res: Response) => {
     if (!query) {
       res.status(404).json({ message: "We can't find any query" });
     }
-    console.log(query)
     res.status(200).json({ message: "query found", data: query });
   } catch (error) {
     console.log(error);

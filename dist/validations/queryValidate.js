@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const joi_1 = __importDefault(require("joi"));
-const blogSchema = joi_1.default.object({
-    title: joi_1.default.string().min(10).required(),
-    description: joi_1.default.string().min(10).required(),
+const querySchema = joi_1.default.object({
+    name: joi_1.default.string().required(),
+    message: joi_1.default.string().min(5).max(150).required()
 });
-const validateBlog = (blogData) => {
-    return blogSchema.validate(blogData);
+const validateQuery = (query) => {
+    return querySchema.validate(query);
 };
-exports.default = validateBlog;
+exports.default = validateQuery;

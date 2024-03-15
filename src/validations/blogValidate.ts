@@ -1,8 +1,8 @@
 import Joi from 'joi';
 
 const blogSchema = Joi.object({
-  title: Joi.string().required(),
-  description: Joi.string().required(),
+  title: Joi.string().min(10).required(),
+  description: Joi.string().min(10).required(),
 });
 
 const validateBlog = (blogData: any) => {

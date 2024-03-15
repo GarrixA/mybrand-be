@@ -46,7 +46,6 @@ const httpGetOneQuery = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (!query) {
             res.status(404).json({ message: "We can't find any query" });
         }
-        console.log(query);
         res.status(200).json({ message: "query found", data: query });
     }
     catch (error) {

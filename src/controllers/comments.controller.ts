@@ -67,6 +67,28 @@ const httpGetCommentsOfBlog = async (req: Request, res: Response) => {
 };
 
 
+// Update Comment
+const httpUpdateComment = async (req: Request, res: Response) => {
+  try {
+    const commentId = req.params.commentId;
+    const content = req.body.content;
+    
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+    
+    comment.content = content;
+    await comment.save();
+    
+    res.status(200).json({ message: "Comment updated successfully", comment });
+  } catch (error: any) {
+    console.error("Error updating comment:", error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // delete a comment on blog
 const httpDeleteComment = async (req: Request, res: Response) => {
   try {
@@ -85,4 +107,4 @@ const httpDeleteComment = async (req: Request, res: Response) => {
   }
 };
 
-export default { httpCreateComment, httpGetCommentsOfBlog };
+export default { httpCreateComment, httpGetCommentsOfBlog, httpUpdateComment, httpDeleteComment };
