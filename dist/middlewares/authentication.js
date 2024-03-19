@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const authMiddleware_1 = __importDefault(require("./authMiddleware"));
 const userSchema_1 = __importDefault(require("../models/userSchema"));
-const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const authenticateAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const decoded = yield (0, authMiddleware_1.default)(req, res);
     if (decoded) {
         req.userId = decoded.userId;
@@ -26,4 +26,19 @@ const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
     next();
 });
-exports.default = isAdmin;
+const authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const decoded = yield (0, authMiddleware_1.default)(req, res);
+    if (decoded) {
+        req.userId = decoded.userId;
+        const id = req.userId;
+        const user = yield userSchema_1.default.findById(id);
+        if ((user === null || user === void 0 ? void 0 : user.role) !== "user") {
+            return res.status(406).json({ message: "Only user can perform this action" });
+        }
+    }
+    next();
+});
+exports.default = {
+    authenticateAdmin,
+    authenticateUser
+};

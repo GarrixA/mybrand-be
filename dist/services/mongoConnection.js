@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mongoDisconnect = exports.mongoConnect = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const urli = "mongodb+srv://aphro10:A2TnsR0lx6OOl9q0@cluster0.lwgz88o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const urli = "mongodb://localhost:27017/Blogs";
 mongoose_1.default.connection.on('open', () => {
     console.info('Database connected');
 });

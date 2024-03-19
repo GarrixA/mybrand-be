@@ -8,10 +8,10 @@ const blog_controllers_js_1 = __importDefault(require("../controllers/blog.contr
 const blogMiddleware_js_1 = __importDefault(require("../middlewares/blogMiddleware.js"));
 const authentication_js_1 = __importDefault(require("../middlewares/authentication.js"));
 const blogRoutes = express_1.default.Router();
-blogRoutes.post('/', blogMiddleware_js_1.default, blog_controllers_js_1.default.httpCreateBlog);
+blogRoutes.post('/', authentication_js_1.default.authenticateAdmin, blogMiddleware_js_1.default, blog_controllers_js_1.default.httpCreateBlog);
 blogRoutes.get('/', blog_controllers_js_1.default.httpGetBlogs);
 blogRoutes.get('/:id', blog_controllers_js_1.default.httpGetOneBlog);
-blogRoutes.patch('/:id', blogMiddleware_js_1.default, blog_controllers_js_1.default.httpUpdateBlog);
-blogRoutes.delete('/:id', authentication_js_1.default, blog_controllers_js_1.default.httpDeleteBlog);
-blogRoutes.post('/:id/likes', blogMiddleware_js_1.default, blog_controllers_js_1.default.httpLikeBlog);
+blogRoutes.patch('/:id', authentication_js_1.default.authenticateAdmin, blogMiddleware_js_1.default, blog_controllers_js_1.default.httpUpdateBlog);
+blogRoutes.delete('/:id', authentication_js_1.default.authenticateAdmin, blog_controllers_js_1.default.httpDeleteBlog);
+blogRoutes.post('/:id/likes', authentication_js_1.default.authenticateAdmin, blogMiddleware_js_1.default, blog_controllers_js_1.default.httpLikeBlog);
 exports.default = blogRoutes;

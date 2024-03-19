@@ -1,17 +1,18 @@
 import express from "express";
 import httpUsers from '../controllers/user.controllers';
-import isUserValid from "../middlewares/userMidleWares";
+import isUser from "../middlewares/userMidleWares";
+import auth from "../middlewares/authentication";
 
 const userRouter = express.Router();
 
 //crude of user
-userRouter.get('/', httpUsers.httpGetAllUsers);
-userRouter.get('/:id', httpUsers.httpGetOneeUser);
-userRouter.patch('/:id',isUserValid, httpUsers.httpUpdateUser);
-userRouter.delete('/:id', httpUsers.httpDeleteUser);
+userRouter.get('/', auth.authenticateAdmin, httpUsers.httpGetAllUsers);
+userRouter.get('/:id', auth.authenticateAdmin, httpUsers.httpGetOneeUser);
+userRouter.patch('/:id', auth.authenticateAdmin, isUser.isUserValid, httpUsers.httpUpdateUser);
+userRouter.delete('/:id', auth.authenticateAdmin, httpUsers.httpDeleteUser);
 
 // user signup and login
-userRouter.post('/login', isUserValid, httpUsers.httpLogin);
-userRouter.post('/register', isUserValid, httpUsers.httpRegister);
+userRouter.post('/login',  isUser.isLoginValid, httpUsers.httpLogin);
+userRouter.post('/register', isUser.isUserValid, httpUsers.httpRegister);
 
 export default userRouter;
