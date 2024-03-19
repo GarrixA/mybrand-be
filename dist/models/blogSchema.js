@@ -20,4 +20,4 @@ const BlogSchema = new schema({
     },
     comments: [{ type: {} }],
 }, { timestamps: true });
-exports.default = mongoose_1.default.model('Blog', BlogSchema);
+exports.default = mongoose_1.default.model('Blogs', BlogSchema);

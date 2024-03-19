@@ -9,6 +9,6 @@ const apiRouter = express.Router();
 apiRouter.use('/blogs', blogRoutes);
 apiRouter.use('/blogs', commentRoutes);
 apiRouter.use('/queries', queryRoutes);
-apiRouter.use('/user', userRouter);
+apiRouter.use('/users', userRouter);
 
 export default apiRouter;

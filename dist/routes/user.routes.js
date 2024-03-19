@@ -10,7 +10,6 @@ const userRouter = express_1.default.Router();
 //crude of user
 userRouter.get('/', user_controllers_1.default.httpGetAllUsers);
 userRouter.get('/:id', user_controllers_1.default.httpGetOneeUser);
-userRouter.post('/', userMidleWares_1.default, user_controllers_1.default.httpCreateUser);
 userRouter.patch('/:id', userMidleWares_1.default, user_controllers_1.default.httpUpdateUser);
 userRouter.delete('/:id', user_controllers_1.default.httpDeleteUser);
 // user signup and login

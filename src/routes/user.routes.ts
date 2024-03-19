@@ -7,7 +7,6 @@ const userRouter = express.Router();
 //crude of user
 userRouter.get('/', httpUsers.httpGetAllUsers);
 userRouter.get('/:id', httpUsers.httpGetOneeUser);
-userRouter.post('/',isUserValid, httpUsers.httpCreateUser);
 userRouter.patch('/:id',isUserValid, httpUsers.httpUpdateUser);
 userRouter.delete('/:id', httpUsers.httpDeleteUser);
 

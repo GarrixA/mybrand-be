@@ -10,4 +10,4 @@ const LikeSchema = new schema({
         type: String,
     },
 });
-exports.default = mongoose_1.default.model("Like", LikeSchema);
+exports.default = mongoose_1.default.model("Likes", LikeSchema);

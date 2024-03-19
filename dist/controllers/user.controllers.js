@@ -15,25 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const userSchema_1 = __importDefault(require("../models/userSchema"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-// Create a user
-const httpCreateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = new userSchema_1.default({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-        });
-        yield user.save();
-        res.status(201).json({ message: "User Created" });
-    }
-    catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-});
 //get all users
 const httpGetAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield userSchema_1.default.find();
+        const users = yield userSchema_1.default.find().select('-password');
         res.status(200).json({ message: "List of users", users });
     }
     catch (error) {
@@ -95,10 +80,18 @@ const httpDeleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function*
 const httpRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, email, password, role, status } = req.body;
+        const existingUserName = yield userSchema_1.default.findOne({ $or: [{ username }] });
+        if (existingUserName) {
+            return res.status(409).json({ message: "Username already exists" });
+        }
+        const existingUserEmail = yield userSchema_1.default.findOne({ $or: [{ email }] });
+        if (existingUserEmail) {
+            return res.status(409).json({ message: "email already exists" });
+        }
         const userRole = role || 'user';
         const userStatus = status || 'inactive';
-        const harshedPassword = yield bcrypt_1.default.hash(password, 10);
-        const user = new userSchema_1.default({ username, email, password: harshedPassword, role: userRole, status: userStatus });
+        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        const user = new userSchema_1.default({ username, email, password: hashedPassword, role: userRole, status: userStatus });
         yield user.save();
         res.status(201).json({ message: "User registered successfully" });
     }
@@ -131,7 +124,6 @@ const httpLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.default = {
     httpLogin,
     httpRegister,
-    httpCreateUser,
     httpDeleteUser,
     httpGetAllUsers,
     httpGetOneeUser,

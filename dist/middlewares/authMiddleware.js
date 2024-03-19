@@ -12,20 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoDisconnect = exports.mongoConnect = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const urli = "mongodb+srv://aphro10:A2TnsR0lx6OOl9q0@cluster0.lwgz88o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-mongoose_1.default.connection.on('open', () => {
-    console.info('Database connected');
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const verifyToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.headers["authorization"];
+    if (!token) {
+        return res.status(401).json({ error: "Unauthorisezed" });
+    }
+    const decoded = jsonwebtoken_1.default.verify(token, "my_secret_keyIs£1000Kand$1000K");
+    return decoded;
 });
-mongoose_1.default.connection.on('close', () => {
-    console.info('something went wrong');
-});
-const mongoConnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.connect(urli);
-});
-exports.mongoConnect = mongoConnect;
-const mongoDisconnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.disconnect();
-});
-exports.mongoDisconnect = mongoDisconnect;
+exports.default = verifyToken;

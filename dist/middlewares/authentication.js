@@ -12,20 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoDisconnect = exports.mongoConnect = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const urli = "mongodb+srv://aphro10:A2TnsR0lx6OOl9q0@cluster0.lwgz88o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-mongoose_1.default.connection.on('open', () => {
-    console.info('Database connected');
+const authMiddleware_1 = __importDefault(require("./authMiddleware"));
+const userSchema_1 = __importDefault(require("../models/userSchema"));
+const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const decoded = yield (0, authMiddleware_1.default)(req, res);
+    if (decoded) {
+        req.userId = decoded.userId;
+        const id = req.userId;
+        const user = yield userSchema_1.default.findById(id);
+        if ((user === null || user === void 0 ? void 0 : user.role) !== "admin") {
+            return res.status(406).json({ message: "Only admin can perform this action" });
+        }
+    }
+    next();
 });
-mongoose_1.default.connection.on('close', () => {
-    console.info('something went wrong');
-});
-const mongoConnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.connect(urli);
-});
-exports.mongoConnect = mongoConnect;
-const mongoDisconnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.disconnect();
-});
-exports.mongoDisconnect = mongoDisconnect;
+exports.default = isAdmin;

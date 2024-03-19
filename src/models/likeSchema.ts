@@ -8,4 +8,4 @@ const LikeSchema = new schema({
   },
 });
 
-export default mongoose.model("Like", LikeSchema);
+export default mongoose.model("Likes", LikeSchema);

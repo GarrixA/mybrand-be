@@ -12,5 +12,5 @@ const apiRouter = express_1.default.Router();
 apiRouter.use('/blogs', blog_routes_1.default);
 apiRouter.use('/blogs', comment_routes_1.default);
 apiRouter.use('/queries', query_routes_1.default);
-apiRouter.use('/user', user_routes_1.default);
+apiRouter.use('/users', user_routes_1.default);
 exports.default = apiRouter;

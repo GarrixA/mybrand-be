@@ -4,6 +4,10 @@ const schema = mongoose.Schema;
 
 const CommentSchema = new schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       required: true,
@@ -15,4 +19,4 @@ const CommentSchema = new schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Comment', CommentSchema);
+export default mongoose.model('Comments', CommentSchema);

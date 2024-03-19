@@ -18,8 +18,9 @@ const blogSchema_1 = __importDefault(require("../models/blogSchema"));
 const httpCreateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blogId = req.params.id;
+        const name = req.body.name;
         const content = req.body.content;
-        if (!blogId || !content) {
+        if (!blogId || !content || !name) {
             return res.status(400).json({ error: "Missing required parameters" });
         }
         const blog = yield blogSchema_1.default.findById(blogId);
@@ -27,11 +28,13 @@ const httpCreateComment = (req, res) => __awaiter(void 0, void 0, void 0, functi
             return res.status(404).json({ error: "Blog not found" });
         }
         const newComment = new commentSchema_1.default({
+            name,
             content,
         });
         const savedComment = yield newComment.save();
         blog.comments.push({
             _id: savedComment._id,
+            name: savedComment.name,
             content: savedComment.content,
         });
         yield blog.save();
@@ -39,7 +42,7 @@ const httpCreateComment = (req, res) => __awaiter(void 0, void 0, void 0, functi
             .status(201)
             .json({
             message: "Comment created successfully",
-            comment: savedComment,
+            data: savedComment,
             blogId: blogId
         });
     }
@@ -53,7 +56,7 @@ const httpGetCommentsOfBlog = (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         const blogId = req.params.id;
         if (!blogId) {
-            return res.status(400).json({ error: "Blog id is missing" });
+            return res.status(404).json({ error: "Blog id is missing" });
         }
         const blog = yield blogSchema_1.default.findById(blogId);
         if (!blog) {
@@ -64,24 +67,6 @@ const httpGetCommentsOfBlog = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
     catch (error) {
         console.error("Error fetching comments:", error.message);
-        return res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-// Update Comment
-const httpUpdateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const commentId = req.params.commentId;
-        const content = req.body.content;
-        const comment = yield commentSchema_1.default.findById(commentId);
-        if (!comment) {
-            return res.status(404).json({ error: "Comment not found" });
-        }
-        comment.content = content;
-        yield comment.save();
-        res.status(200).json({ message: "Comment updated successfully", comment });
-    }
-    catch (error) {
-        console.error("Error updating comment:", error.message);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
@@ -100,4 +85,4 @@ const httpDeleteComment = (req, res) => __awaiter(void 0, void 0, void 0, functi
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
-exports.default = { httpCreateComment, httpGetCommentsOfBlog, httpUpdateComment, httpDeleteComment };
+exports.default = { httpCreateComment, httpGetCommentsOfBlog, httpDeleteComment };

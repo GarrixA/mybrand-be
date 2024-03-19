@@ -1,7 +1,8 @@
 import Joi from "joi";
 
 const commentSchema = Joi.object({
-    content: Joi.string().required()
+    content: Joi.string().required(),
+    name: Joi.string().required()
 });
 
 const validateComment = (commentData: any) =>{

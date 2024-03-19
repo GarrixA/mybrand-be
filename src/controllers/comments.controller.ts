@@ -6,9 +6,10 @@ import Blog from "../models/blogSchema";
 const httpCreateComment = async (req: Request, res: Response) => {
   try {
     const blogId = req.params.id;
+    const name = req.body.name;
     const content = req.body.content;
 
-    if (!blogId || !content) {
+    if (!blogId || !content || !name) {
       return res.status(400).json({ error: "Missing required parameters" });
     }
 
@@ -19,6 +20,7 @@ const httpCreateComment = async (req: Request, res: Response) => {
     }
 
     const newComment = new Comment({
+      name,
       content,
     });
 
@@ -26,6 +28,7 @@ const httpCreateComment = async (req: Request, res: Response) => {
 
     blog.comments.push({
       _id: savedComment._id,
+      name: savedComment.name,
       content: savedComment.content,
     });
     await blog.save();
@@ -34,7 +37,7 @@ const httpCreateComment = async (req: Request, res: Response) => {
       .status(201)
       .json({
         message: "Comment created successfully",
-        comment: savedComment,
+        data: savedComment,
         blogId: blogId
       });
   } catch (error: any) {
@@ -49,7 +52,7 @@ const httpGetCommentsOfBlog = async (req: Request, res: Response) => {
     const blogId = req.params.id;
 
     if (!blogId) {
-      return res.status(400).json({ error: "Blog id is missing" });
+      return res.status(404).json({ error: "Blog id is missing" });
     }
 
     const blog = await Blog.findById(blogId);
@@ -66,28 +69,6 @@ const httpGetCommentsOfBlog = async (req: Request, res: Response) => {
   }
 };
 
-
-// Update Comment
-const httpUpdateComment = async (req: Request, res: Response) => {
-  try {
-    const commentId = req.params.commentId;
-    const content = req.body.content;
-    
-    const comment = await Comment.findById(commentId);
-
-    if (!comment) {
-      return res.status(404).json({ error: "Comment not found" });
-    }
-    
-    comment.content = content;
-    await comment.save();
-    
-    res.status(200).json({ message: "Comment updated successfully", comment });
-  } catch (error: any) {
-    console.error("Error updating comment:", error.message);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-};
 
 // delete a comment on blog
 const httpDeleteComment = async (req: Request, res: Response) => {
@@ -107,4 +88,4 @@ const httpDeleteComment = async (req: Request, res: Response) => {
   }
 };
 
-export default { httpCreateComment, httpGetCommentsOfBlog, httpUpdateComment, httpDeleteComment };
+export default { httpCreateComment, httpGetCommentsOfBlog, httpDeleteComment };
