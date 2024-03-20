@@ -13,12 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const blogSchema_1 = __importDefault(require("../models/blogSchema"));
+// import uploadImage from '../helpers/cloudnary';
 // create a blog
 const httpCreateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // const file: any = req.file;
+    // const result = await uploadImage(file, res)
     try {
         const blog = new blogSchema_1.default({
             title: req.body.title,
             description: req.body.description,
+            // image: result
         });
         yield blog.save();
         res.status(201).json({ message: 'Blog created', data: blog });

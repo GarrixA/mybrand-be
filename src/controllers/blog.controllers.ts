@@ -1,12 +1,17 @@
 import { Request, Response } from 'express';
 import Blog from '../models/blogSchema';
+// import uploadImage from '../helpers/cloudnary';
+
 
 // create a blog
 const httpCreateBlog = async (req: Request, res: Response) => {
+  // const file: any = req.file;
+  // const result = await uploadImage(file, res)
   try {
     const blog = new Blog({
       title: req.body.title,
       description: req.body.description,
+      // image: result
     });
 
     await blog.save();

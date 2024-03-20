@@ -12,21 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoDisconnect = exports.mongoConnect = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
+const cloudinary_1 = require("cloudinary");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-mongoose_1.default.connection.on('open', () => {
-    console.info('Database connected');
+cloudinary_1.v2.config({
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
+    api_secret: process.env.api_secret,
 });
-mongoose_1.default.connection.on('close', () => {
-    console.info('something went wrong');
+const uploadImage = (file, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const upload = yield cloudinary_1.v2.uploader.upload(file.path);
+        return upload.secure_url;
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal Server Error" });
+    }
 });
-const mongoConnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.connect(process.env.URL);
-});
-exports.mongoConnect = mongoConnect;
-const mongoDisconnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.disconnect();
-});
-exports.mongoDisconnect = mongoDisconnect;
+exports.default = uploadImage;

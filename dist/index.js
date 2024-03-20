@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_js_1 = __importDefault(require("./app.js"));
+const app_1 = __importDefault(require("./app"));
 const mongoConnection_js_1 = require("./services/mongoConnection.js");
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, mongoConnection_js_1.mongoConnect)();
-    app_js_1.default.listen(8080, () => {
+    app_1.default.listen(8080, () => {
         console.log('server is listening ..... 8080');
     });
 });

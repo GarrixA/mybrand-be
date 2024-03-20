@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
 import apiRouter from './routes'
 
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', apiRouter);
 

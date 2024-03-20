@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoDisconnect = exports.mongoConnect = void 0;
+exports.mongoTestDisconnect = exports.mongoTestConnect = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -22,11 +22,11 @@ mongoose_1.default.connection.on('open', () => {
 mongoose_1.default.connection.on('close', () => {
     console.info('something went wrong');
 });
-const mongoConnect = () => __awaiter(void 0, void 0, void 0, function* () {
+const mongoTestConnect = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(process.env.URL);
 });
-exports.mongoConnect = mongoConnect;
-const mongoDisconnect = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.mongoTestConnect = mongoTestConnect;
+const mongoTestDisconnect = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.disconnect();
 });
-exports.mongoDisconnect = mongoDisconnect;
+exports.mongoTestDisconnect = mongoTestDisconnect;

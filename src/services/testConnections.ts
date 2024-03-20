@@ -10,10 +10,10 @@ mongoose.connection.on('close', () => {
   console.info('something went wrong');
 });
 
-export const mongoConnect = async () => {
+export const mongoTestConnect = async () => {
   await mongoose.connect(process.env.URL as string);
 };
 
-export const mongoDisconnect = async () => {
+export const mongoTestDisconnect = async () => {
   await mongoose.disconnect();
 };
