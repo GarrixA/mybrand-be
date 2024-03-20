@@ -9,6 +9,6 @@ const commentMiddleWare_1 = __importDefault(require("../middlewares/commentMiddl
 const authentication_1 = __importDefault(require("../middlewares/authentication"));
 const commentRoutes = express_1.default.Router();
 commentRoutes.post('/:id/comments', authentication_1.default.authenticateUser, commentMiddleWare_1.default, comments_controller_1.default.httpCreateComment);
-commentRoutes.get('/:id/comments', authentication_1.default.authenticateAdmin, comments_controller_1.default.httpGetCommentsOfBlog);
+commentRoutes.get('/:id/comments', comments_controller_1.default.httpGetCommentsOfBlog);
 commentRoutes.delete('/:id/comments/:id', authentication_1.default.authenticateAdmin, comments_controller_1.default.httpDeleteComment);
 exports.default = commentRoutes;

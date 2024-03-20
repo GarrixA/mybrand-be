@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const urli = "mongodb://localhost:27017/Blogs"
+const urli = "mongodb://127.0.0.1:27017/Blogs"
 
 mongoose.connection.on('open', () => {
   console.info('Database connected');
