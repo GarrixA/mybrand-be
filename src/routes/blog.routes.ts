@@ -1,7 +1,7 @@
 import express from 'express';
-import httpBlog from '../controllers/blog.controllers.js';
-import isValid from'../middlewares/blogMiddleware.js';
-import auth from '../middlewares/authentication.js';
+import httpBlog from '../controllers/blog.controllers';
+import isValid from'../middlewares/blogMiddleware';
+import auth from '../middlewares/authentication';
 // import upload from '../helpers/milter.js';
 
 const blogRoutes = express.Router();

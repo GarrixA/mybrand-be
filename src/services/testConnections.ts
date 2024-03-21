@@ -11,7 +11,7 @@ mongoose.connection.on('close', () => {
 });
 
 export const mongoTestConnect = async () => {
-  await mongoose.connect(process.env.URL as string);
+  await mongoose.connect(process.env.URL_TEST as string);
 };
 
 export const mongoTestDisconnect = async () => {

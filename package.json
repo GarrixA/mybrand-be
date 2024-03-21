@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watchAll --no-cashe --detectOpenHandles",
+    "test:ci": "jest",
     "dev": "ts-node-dev src/index.ts"
   },
   "keywords": [],
@@ -25,11 +26,20 @@
     "postman": "^0.2.0",
     "typescript": "^5.4.2"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/multer": "^1.4.11",
     "@types/node": "^20.11.26",
+    "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.1.2",
     "ts-node-dev": "^2.0.0"
   }
 }
