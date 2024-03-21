@@ -10,7 +10,7 @@ const httpCreateQuery = async (req: Request, res: Response) => {
     });
 
     await query.save();
-    res.status(200).json({ message: "Message created", data: query });
+    res.status(201).json({ message: "Message created", data: query });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });

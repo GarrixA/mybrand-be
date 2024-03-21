@@ -1,23 +1,24 @@
 import { Request, Response } from 'express';
 import Blog from '../models/blogSchema';
-// import uploadImage from '../helpers/cloudnary';
-
+import cloudinary from '../helpers/cloudnary';
 
 // create a blog
 const httpCreateBlog = async (req: Request, res: Response) => {
-  // const file: any = req.file;
-  // const result = await uploadImage(file, res)
   try {
+    let uploadedImage = "";
+    if(req.file){
+      const image = await cloudinary.uploader.upload(req.file.path)
+      uploadedImage = image.secure_url;
+    }
     const blog = new Blog({
       title: req.body.title,
       description: req.body.description,
-      // image: result
+      image: uploadedImage
     });
 
     await blog.save();
     res.status(201).json({ message: 'Blog created', data: blog });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };

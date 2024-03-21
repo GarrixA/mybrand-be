@@ -4,7 +4,7 @@ import auth from '../middlewares/authentication';
 
 const queryRoutes = express.Router();
 
-queryRoutes.post('/',auth.authenticateUser, httpConnect.httpCreateQuery);
+queryRoutes.post('/', httpConnect.httpCreateQuery);
 queryRoutes.get('/', auth.authenticateAdmin, httpConnect.httpGetQueries);
 queryRoutes.get('/:id', auth.authenticateAdmin, httpConnect.httpGetOneQuery);
 queryRoutes.delete('/:id', auth.authenticateAdmin, httpConnect.httpDeleteQuery);
