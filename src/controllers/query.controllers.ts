@@ -29,19 +29,21 @@ const httpGetQueries = async (req: Request, res: Response) => {
 };
 
 //get one query
-const httpGetOneQuery = async(req: Request, res: Response) => {
+const httpGetOneQuery = async (req: Request, res: Response) => {
   try {
     const query = await Query.findOne({ _id: req.params.id });
 
     if (!query) {
-      res.status(404).json({ message: "We can't find any query" });
+      return res.status(404).json({ message: "Query not found" });
     }
-    res.status(200).json({ message: "query found", data: query });
+
+    return res.status(200).json({ message: "Query found", data: query });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error("Error fetching query:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 // delete query
 const httpDeleteQuery = async (req: Request, res: Response) => {

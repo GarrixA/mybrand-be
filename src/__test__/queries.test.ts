@@ -7,26 +7,30 @@ import app from "../app";
 import { addQuery, loginAdminData, signupAdminData } from "../mock/static";
 import userSchema from "../models/userSchema";
 import blogSchema from "../models/blogSchema";
+import mongoose from "mongoose";
 
 let token: string;
-jest.setTimeout(10000)
+jest.setTimeout(10000);
+let id: mongoose.Types.ObjectId;
+id = new mongoose.Types.ObjectId(); 
+console.log(id)
 describe("My Blogs API", () => {
   beforeAll(async () => {
     await mongoTestConnect();
   });
 
   afterAll(async () => {
-    await userSchema.deleteMany()
-    await blogSchema.deleteMany()
+    await userSchema.deleteMany();
+    await blogSchema.deleteMany();
     await mongoTestDisconnect();
   });
 
   describe("Welcome to my blogs API", () => {
-    it("should return 200 and wecome message", async () => {
+    it("should return 200 and welcome message", async () => {
       const { body } = await request(app).get("/api/v1").expect(200);
     });
 
-    it("should sign up and login ", async () => {
+    it("should sign up and login", async () => {
       const response = await request(app)
         .post("/api/v1/users/register")
         .send(signupAdminData)
@@ -37,7 +41,7 @@ describe("My Blogs API", () => {
         .post("/api/v1/users/login")
         .send(loginAdminData)
         .expect(200);
-      expect(loginResponse.body.token).toBeDefined()
+      expect(loginResponse.body.token).toBeDefined();
       token = loginResponse.body.token;
     });
 
@@ -48,12 +52,21 @@ describe("My Blogs API", () => {
         .expect(200);
     });
 
-    it("Should return 200 and created query", async()=>{
-        const {body} = await request(app)
-            .post("/api/v1/queries")
-            .send(addQuery)
-            .expect(201)
-            
-    })
+    it("Should return 200 and created query", async () => {
+      const { body } = await request(app)
+        .post("/api/v1/queries")
+        .send(addQuery)
+        .expect(201);
+
+      expect(body.message).toStrictEqual("Message created");
+      id = body.id; // Set id to the ObjectId of the created query
+    });
+
+    it("It should return 200 and single query", async () => {
+      const { body } = await request(app)
+        .get(`/api/v1/queries/${id}`)
+        .set("Authorization", `${token}`)
+        .expect(200);
+    });
   });
 });
