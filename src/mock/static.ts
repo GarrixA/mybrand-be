@@ -31,3 +31,8 @@ export const addQuery = {
     name: "Kevin",
     message: "My message is stick around"
 }
+
+export const commentData = {
+    name: "Rugamba",
+    content: "Wow I like how it looks, amazing"
+}

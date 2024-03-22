@@ -7,6 +7,7 @@ import app from "../app";
 import { addQuery, loginAdminData, signupAdminData } from "../mock/static";
 import userSchema from "../models/userSchema";
 import blogSchema from "../models/blogSchema";
+import Query from '../models/querySchema';
 import mongoose from "mongoose";
 
 let token: string;
@@ -52,6 +53,15 @@ describe("My Blogs API", () => {
         .expect(200);
     });
 
+    it("It should return 200 and single query", async () => {
+      const query = new Query(addQuery)
+      await query.save()
+      const { body } = await request(app)
+        .get(`/api/v1/queries/${query._id}`)
+        .set("Authorization", `${token}`)
+        .expect(200);
+    });
+
     it("Should return 200 and created query", async () => {
       const { body } = await request(app)
         .post("/api/v1/queries")
@@ -59,14 +69,6 @@ describe("My Blogs API", () => {
         .expect(201);
 
       expect(body.message).toStrictEqual("Message created");
-      id = body.id; // Set id to the ObjectId of the created query
-    });
-
-    it("It should return 200 and single query", async () => {
-      const { body } = await request(app)
-        .get(`/api/v1/queries/${id}`)
-        .set("Authorization", `${token}`)
-        .expect(200);
     });
   });
 });

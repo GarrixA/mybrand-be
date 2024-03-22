@@ -7,6 +7,7 @@ import app from "../app";
 import { blogData, loginAdminData, signupAdminData, updateBlogData } from "../mock/static";
 import userSchema from "../models/userSchema";
 import blogSchema from "../models/blogSchema";
+import Blog from '../models/blogSchema';
 import mongoose from "mongoose";
 
 let token: string
@@ -64,12 +65,14 @@ describe("My Blog API", () => {
         .expect(201)
     })
 
-    // it("Should return 200 and updated blog", async()=>{
-    //   const {body} = await request(app)
-    //     .patch(`/api/v1/blogs/${id}`)
-    //     .set("Authorization", `${token}`)
-    //     .send(updateBlogData)
-    //     .expect(200)
-    // })
+    it("Should return 200 and updated blog", async()=>{
+      const updatedBlog = await new Blog(blogData)
+      await updatedBlog.save()
+      const {body} = await request(app)
+        .patch(`/api/v1/blogs/${updatedBlog._id}`)
+        .set("Authorization", `${token}`)
+        .send(updateBlogData)
+        .expect(200)
+    })
   });
 });

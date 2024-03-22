@@ -12,7 +12,7 @@ blogRoutes.get('/', httpBlog.httpGetBlogs);
 blogRoutes.get('/:id', httpBlog.httpGetOneBlog );
 blogRoutes.patch('/:id', auth.authenticateAdmin, isValid, httpBlog.httpUpdateBlog);
 blogRoutes.delete('/:id', auth.authenticateAdmin, httpBlog.httpDeleteBlog);
-blogRoutes.post('/:id/likes', auth.authenticateAdmin, isValid, httpBlog.httpLikeBlog)
+blogRoutes.post('/:id/likes', httpBlog.httpLikeBlog)
 
 
 

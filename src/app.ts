@@ -1,5 +1,7 @@
-import express, { urlencoded } from 'express';
-import apiRouter from './routes'
+import express from 'express';
+import apiRouter from './routes';
+import swaggerUI from "swagger-ui-express";
+import docs from "./documentedUI";
 
 const app = express();
 
@@ -7,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', apiRouter);
-
+app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(docs));
 app.use('/api/v1', (req, res) => {
   res.status(200).json({ message: 'Welcome to the my blogs API' });
 });
