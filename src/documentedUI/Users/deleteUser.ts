@@ -1,11 +1,11 @@
 export default {
     delete:{
         tags: ["Users"],
-        description: "Delete a user",
+        description: "Delete user",
         operationId: "deleteUser",
         security: [
             {
-              Auth: [],
+              BearerAuth: [],
             },
           ],
         parameters: [
@@ -20,7 +20,17 @@ export default {
         ],
         responses: {
             "200": {
-                description: "User deleted",
+                description: "No content",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/components/schemas/Users",
+                        },
+                    },
+                },
+            },
+            "204": {
+                description: "User deeleted Successfully",
                 content: {
                     "application/json": {
                         schema: {
@@ -32,7 +42,17 @@ export default {
             "404": {
                 description: "User was not found",
             },
+            "500": {
+                description: "Internal Server Error",
+                content: {
+                    "application/json": {
+                        example: {
+                            status: false,
+                            message: "An error occurred while signing up the user",
+                        },
+                    },
+                },
+            },
         },
-
-    },
     }
+}

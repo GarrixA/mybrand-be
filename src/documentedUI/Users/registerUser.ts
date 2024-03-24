@@ -9,7 +9,7 @@ export default {
                     schema: {
                         type: "object",
                         properties: {
-                            username: { type: "string" },
+                            username: { type: "string", example: "gakunzi11" },
                             email: { type: "string", format: "email" },
                             password: { type: "string", minLength: 4 },
                         },

@@ -22,7 +22,7 @@ export default {
         '/api/v1/users/register': {
             ...addUser,
         },
-        '/api/v1/user/login': {
+        '/api/v1/users/login': {
             ...loginUser,
         },
     

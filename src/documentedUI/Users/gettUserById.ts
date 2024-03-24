@@ -32,6 +32,17 @@ export default {
             '404':{
                 description:'User not found',
             },
+            "500": {
+                description: "Internal Server Error",
+                content: {
+                    "application/json": {
+                        example: {
+                            status: false,
+                            message: "An error occurred while signing up the user",
+                        },
+                    },
+                },
+            },
         },
     },
     }

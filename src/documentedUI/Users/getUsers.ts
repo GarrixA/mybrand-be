@@ -5,12 +5,12 @@ export default {
         operationId: "getAllUsers",
         security:[
             {
-                APIKeyAuth:[]
+                BearerAuth:[]
             }
         ],
         responses: {
             "200": {
-                description: "List of All users",
+                description: "All users retrieved",
                 content: {
                     "application/json": {
                         schema: {

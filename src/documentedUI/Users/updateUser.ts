@@ -1,31 +1,32 @@
 export default {
     patch: {
         tags:["Users"],
-        description:"Update user using ID",
+        description:"Update user by Id",
         operationId:"updateUser",
         security:[
             {
-                Auth:[]
+                BearerAuth:[]
             }
         ],
         parameters:[
             {
-            name:"userId",
-            in:"path",
-            schema:{
-                type:"string"
-            },
-            required:true
+                name:"userId",
+                in:"path",
+                schema:{
+                    type:"string"
+                },
+                required:true
             }
         ],
         requestBody:{
-            content :{
+            content:{
                 "application/json": {
                     schema:{
                         type:"object",
                         properties:{
-                            username:{type:"string", example:"gakunzi12"},
+                            usename:{type:"string", example:"gakunzi"},
                             email:{type:"string", example:"gakunzi@gmail.com"},
+                            password:{type:"string", example:"pass@123"},
                         },
                         required:["username", "email"]
                     },
@@ -33,7 +34,7 @@ export default {
             },
         },
         responses:{
-            "200":{
+            "201":{
                 description:"User was updated",
                 content:{
                     "application/json":{

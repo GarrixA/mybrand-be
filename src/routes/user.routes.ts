@@ -8,7 +8,7 @@ const userRouter = express.Router();
 //crude of user
 userRouter.get('/', auth.authenticateAdmin, httpUsers.httpGetAllUsers);
 userRouter.get('/:id', auth.authenticateAdmin, httpUsers.httpGetOneeUser);
-userRouter.patch('/:id', auth.authenticateAdmin, isUser.isUserValid, httpUsers.httpUpdateUser);
+userRouter.patch('/:id', auth.authenticateAdmin,  httpUsers.httpUpdateUser);
 userRouter.delete('/:id', auth.authenticateAdmin, httpUsers.httpDeleteUser);
 
 // user signup and login
