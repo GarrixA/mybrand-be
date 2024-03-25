@@ -13,7 +13,7 @@ userRouter.delete('/:id', auth.authenticateAdmin, httpUsers.httpDeleteUser);
 
 // user signup and login
 // userRouter.post('/login',  isUser.isLoginValid, httpUsers.httpLogin);
-userRouter.post('/login',  httpUsers.httpLogin);
+userRouter.post('/login', isUser.isLoginValid, httpUsers.httpLogin);
 userRouter.post('/register', isUser.isUserValid, httpUsers.httpRegister);
 
 export default userRouter;

@@ -287,11 +287,18 @@ paths:
           description: Internal Server Error
   /api/v1/blogs/{id}/comments:
     post:
-      sammary: Create a blog
+      summary: Create a comment for a blog
       tags: [Blogs]
-      description: Endpoint for creating blog
+      description: Endpoint for creating a comment for a blog
       security:
         - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the blog
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -301,13 +308,13 @@ paths:
               properties:
                 name:
                   type: string
-                  description: title of the blog
+                  description: Title of the comment
                 content:
                   type: string
-                  description: description of a blog
+                  description: Content of the comment
       responses:
-        "201":
-          description: comment created successfully
+        '201':
+          description: Comment created successfully
           content:
             application/json:
               schema:
@@ -315,7 +322,7 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: blog not found
+          description: Blog not found
         '500':
           description: Internal Server Error
 

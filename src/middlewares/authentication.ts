@@ -16,31 +16,32 @@ interface ExpandedRequest <T = Record<string, any>> extends Request <T> {
         admin: "admin"
     }
 const authenticateAdmin = async(req: ExpandedRequest, res: Response, next: NextFunction) =>{
-    const decoded = await verifyToken(req, res) as JwtPayload; 
+    const decoded = await verifyToken(req, res, next) as JwtPayload; 
     if(decoded){
         req.userId = decoded.userId
         const id = req.userId;
         const admin = await userSchema.findById(id);
-        if(admin?.role !== "admin"){
-            return res.status(403).json({message: "Only admins can perform this action"})
+        if (admin?.role !== "admin") {
+            return res.status(403).json({ message: "Only admins can perform this action" });
+        } else {
+            next();
         }
-    }
-    next();
+    }        
 }
 
 const authenticateUser = async(req: ExpandedRequest, res: Response, next: NextFunction) =>{
-    const decoded = await verifyToken(req, res) as JwtPayload;
+    const decoded = await verifyToken(req, res, next) as JwtPayload;
 
     if(decoded){
         req.userId = decoded.userId;
         const id = req.userId;
         const user = await userSchema.findById(id);
-        if(user?.role !== "user"){
-            return res.status(403).json({message: "Only users can perform this action"});
+        if (user?.role !== "user") {
+            return res.status(403).json({ message: "Only loged in person can perform this action" });
+        } else {
+            next();
         }
     }
-
-    next();
 }
 
 

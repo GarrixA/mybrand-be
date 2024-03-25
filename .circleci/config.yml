@@ -26,6 +26,13 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/  
+      - run:
+          name: Deploy to Heroku
+          command: |
+            heroku config:set URL_CLOUD_TEST=$mongodb+srv://aphrogarrix10:rkLcrXm4VDs6vnug@mybrand-testing.lwm3vyk.mongodb.net/?retryWrites=true&w=majority&appName=mybrand-testing
+            heroku config:set cloud_name=$dq6npfdgz
+            heroku config:set api_key=$428757368453436
+            heroku config:set api_secret=$kSazjc1v4U3Ogi-laoj7kVFUALQ
       - heroku/deploy-via-git:
           force: true
 
