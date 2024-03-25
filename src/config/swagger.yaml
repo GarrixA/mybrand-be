@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: My brand serverside
+  description: API for managing my brand site
+  version: 1.0.0
+  swagger: "2.0"
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Signup:
+      type: object
+      properties:
+        username:
+          type: string
+          description: username
+        email:
+          type: string
+          description: email
+        passsword:
+          type: string
+          description: password
+        
+      example:
+        username: "kavuyo"
+        email: "kavuyo@gmail.com"
+        password: "my@pass12"
+
+
+tags:
+  name: Users
+  description: Endpoints for Sign up a user
+
+paths:
+  /api/v1/users/register:
+    post:
+      summary: Register a user
+      tags: [Users]
+      description: End points to Register a user
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signup'
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signup' 
+        '401':
+          description: Unauthorized, authentication error
+        '500':
+          description: Internal server error
+
+  /api/v1/crops/cropData/{id}:
+    get:
+      summary: Get a crop by ID
+      tags: [cropTag]
+      description: Endpoint to retrieve a crop by its ID
+      security:
+        - BearerAuth: []
+      parameters:
+         - in: path
+           name: id
+           schema:
+              type: string
+           required: true
+           description: The crop id
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crops'
+        '401':
+          description: Unauthorized, authentication error
+        '404':
+          description: Crop not found
+        '500':
+          description: Internal server error
+
+  /api/v1/crops/allCrops:
+    get:
+      summary: Get all crops
+      tags: [cropTag]
+      description: Endpoint to retrieve all crops
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crops' 
+        '401':
+          description: Unauthorized, authentication error
+        '404':
+          description: Crop not found
+        '500':
+          description: Internal server error
+
+  /api/v1/crops/deleteCrop/{id}:
+    delete:
+      summary: Delete a crop by ID
+      tags: [cropTag]
+      description: Endpoint to delete a crop by its ID
+      security:
+        - BearerAuth: []
+      parameters:
+         - in: path
+           name: id
+           schema:
+              type: string
+           required: true
+           description: The crop id
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crops' 
+        '401':
+          description: Unauthorized, authentication error
+        '404':
+          description: Crop not found
+        '500':
+          description: Internal server error
