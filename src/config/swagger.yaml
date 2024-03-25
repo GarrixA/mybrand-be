@@ -2,13 +2,12 @@ openapi: 3.0.0
 info:
   title: My brand serverside
   description: API for managing my brand site
-  version: 1.0.0
+  version: 1.0.0 
 
-# servers:
-#   - url: http://localhost:8080/v2/api-docs/
-#     description: Local server
-#   - url: https://mybrand-be-3mug.onrender.com/v2/api-docs/
-#     description: Onrender Server
+servers:
+  - url: http://localhost:8080/v2/api-docs/
+  - url: https://mybrand-be-3mug.onrender.com/v2/api-docs/
+
 
 components:
   securitySchemes:

@@ -9,5 +9,5 @@ commentRoutes.post('/:id/comments',auth.authenticateUser, isCommentValid, httpCo
 commentRoutes.get('/:id/comments', httpComment.httpGetCommentsOfBlog)
 commentRoutes.delete('/:id/comments/:id', auth.authenticateAdmin, httpComment.httpDeleteComment);
 
-
 export default commentRoutes;
+
