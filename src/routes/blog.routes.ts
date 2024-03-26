@@ -2,11 +2,11 @@ import express from 'express';
 import httpBlog from '../controllers/blog.controllers';
 import isValid from'../middlewares/blogMiddleware';
 import auth from '../middlewares/authentication';
-import imagesUpload from '../helpers/multer';
+import upload from '../helpers/multer';
 
 const blogRoutes = express.Router();
 
-blogRoutes.post('/',  auth.authenticateAdmin, imagesUpload, httpBlog.httpCreateBlog);
+blogRoutes.post('/',  auth.authenticateAdmin, upload.single("image"), isValid, httpBlog.httpCreateBlog);
 blogRoutes.get('/', httpBlog.httpGetBlogs);
 blogRoutes.get('/:id', httpBlog.httpGetOneBlog );
 blogRoutes.patch('/:id', auth.authenticateAdmin, isValid, httpBlog.httpUpdateBlog);
