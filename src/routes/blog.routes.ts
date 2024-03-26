@@ -12,6 +12,6 @@ blogRoutes.get('/:id', httpBlog.httpGetOneBlog );
 blogRoutes.patch('/:id', auth.authenticateAdmin, isValid, httpBlog.httpUpdateBlog);
 blogRoutes.delete('/:id', auth.authenticateAdmin, httpBlog.httpDeleteBlog);
 blogRoutes.post('/:id/likes', httpBlog.httpLikeBlog)
-// blogRoutes.post('/upload',  auth.authenticateAdmin, imagesUpload.single('image'),  httpBlog.httpCreateBlogimage);
+
 
 export default blogRoutes;
