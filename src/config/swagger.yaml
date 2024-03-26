@@ -5,8 +5,8 @@ info:
   version: 1.0.0 
 
 servers:
-  - url: http://localhost:8080/v2/api-docs/
-  - url: https://mybrand-be-3mug.onrender.com/v2/api-docs/
+  - url: http://localhost:8080
+  - url: https://mybrand-be-3mug.onrender.com
 
 
 components:
@@ -141,6 +141,7 @@ paths:
       sammary: Create a blog
       tags: [Blogs]
       description: Endpoint for creating blog
+      operationId: createBlog
       security:
         - BearerAuth: []
       requestBody:
@@ -171,12 +172,12 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-
-  /api/v1/blogs:
+          
     get:
       summary: Get all blogs
       tags: [Blogs]
       description: Endpoint to retrieve all blogs
+      operationId: getAllBlogs
       responses:
         "200":
           description: List of all blogs
@@ -196,6 +197,7 @@ paths:
       summary: Get a single blog
       tags: [Blogs]
       description: Endpoint to retrieve one blog
+      operationId: getSingleBlog
       security:
         - BearerAuth: []
       parameters:
@@ -204,7 +206,7 @@ paths:
           schema:
             type: string
           required: true
-          description: Get a blog
+          description: id of a blog to be retrieved
       responses:
         "200":
           description: Successful found a blog
@@ -218,12 +220,12 @@ paths:
           description: blog not found
         "500":
           description: Internal server error
-
-  /api/v1/blogs/{id}:
+          
     delete:
       summary: Delete a blog
       tags: [Blogs]
       description: Endpoint to delete a blog
+      operationId: deleteBlog
       security:
         - BearerAuth: []
       parameters:
@@ -246,12 +248,12 @@ paths:
           description: blog not found
         "500":
           description: Internal server error
-
-  /api/v1/blogs/{id}:
+          
     patch:
       tags: [Blogs]
       summary: Update an existing blog
       description: Update an existing blog by Id
+      operationId: updateBlog
       security:
         - BearerAuth: []
       requestBody:
@@ -289,6 +291,7 @@ paths:
       summary: Create a comment for a blog
       tags: [Blogs]
       description: Endpoint for creating a comment for a blog
+      operationId: createBlogComment
       security:
         - BearerAuth: []
       parameters:
@@ -324,12 +327,12 @@ paths:
           description: Blog not found
         '500':
           description: Internal Server Error
-
-  /api/v1/blogs/{id}/comments:
+          
     get:
-      summary: Get a single comment
+      summary: Get comments of a blog
       tags: [Blogs]
-      description: Endpoint to retrieve one comment
+      description: comments of a blog
+      operationId: getBlogComments
       security:
         - BearerAuth: []
       parameters:
@@ -338,7 +341,7 @@ paths:
           schema:
             type: string
           required: true
-          description: Get a comment
+          description: blog id to add a comment
       responses:
         "200":
           description: Successful found a comment
@@ -366,7 +369,7 @@ paths:
           schema:
             type: string
           required: true
-          description: add a like
+          description: id of blog to like
       responses:
         "201":
           description: Successfully added a like

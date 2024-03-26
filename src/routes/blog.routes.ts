@@ -14,5 +14,4 @@ blogRoutes.delete('/:id', auth.authenticateAdmin, httpBlog.httpDeleteBlog);
 blogRoutes.post('/:id/likes', httpBlog.httpLikeBlog)
 
 
-
 export default blogRoutes;
