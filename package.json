@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "jest --watchAll --no-cashe --detectOpenHandles",
+    "test": "jest --no-cache --coverage",
+    "test-test": "jest --watchAll --no-cache --detectOpenHandles",
     "test:ci": "jest --coverage --detectOpenHandles",
     "dev": "ts-node-dev src/index.ts"
   },
