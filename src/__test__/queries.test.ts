@@ -6,7 +6,6 @@ import {
 import app from "../app";
 import { addQuery, loginAdminData, signupAdminData } from "../mock/static";
 import userSchema from "../models/userSchema";
-import blogSchema from "../models/blogSchema";
 import Query from '../models/querySchema';
 import mongoose from "mongoose";
 
@@ -22,7 +21,6 @@ describe("My Blogs API", () => {
 
   afterAll(async () => {
     await userSchema.deleteMany();
-    await blogSchema.deleteMany();
     await mongoTestDisconnect();
   });
 
@@ -49,7 +47,7 @@ describe("My Blogs API", () => {
     it("Should return 200 and list of queries", async () => {
       const { body } = await request(app)
         .get("/api/v1/queries")
-        .set("Authorization", `${token}`)
+        .set("Authorization", `Bearer ${token}`)
         .expect(200);
     });
 
@@ -58,7 +56,7 @@ describe("My Blogs API", () => {
       await query.save()
       const { body } = await request(app)
         .get(`/api/v1/queries/${query._id}`)
-        .set("Authorization", `${token}`)
+        .set("Authorization", `Bearer ${token}`)
         .expect(200);
     });
 

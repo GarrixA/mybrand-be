@@ -22,8 +22,13 @@ export const loginAdminData = {
 }
 
 export const signupUser = {
-    username: 'garrg12',
-    email: 'garrg@gmail.com',
+    username: 'garrx12',
+    email: 'garrx@gmail.com',
+    password: 'myPassword12$'
+}
+
+export const loginUser = {
+    username: 'garrx12',
     password: 'myPassword12$'
 }
 

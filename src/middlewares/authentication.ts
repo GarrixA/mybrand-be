@@ -22,7 +22,7 @@ const authenticateAdmin = async(req: ExpandedRequest, res: Response, next: NextF
         const id = req.userId;
         const admin = await userSchema.findById(id);
         if (admin?.role !== "admin") {
-            return res.status(403).json({ message: "Only admins can perform this action" });
+            return res.status(401).json({ message: "Only admins can perform this action" });
         } else {
             next();
         }
@@ -37,7 +37,7 @@ const authenticateUser = async(req: ExpandedRequest, res: Response, next: NextFu
         const id = req.userId;
         const user = await userSchema.findById(id);
         if (user?.role !== "user") {
-            return res.status(403).json({ message: "Only loged in person can perform this action" });
+            return res.status(401).json({ message: "Only loged in person can perform this action" });
         } else {
             next();
         }

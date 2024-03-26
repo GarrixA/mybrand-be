@@ -60,7 +60,7 @@ describe("My Blog API", () => {
     it("should return 201 and blog created", async()=>{
       const {body} = await request(app)
         .post('/api/v1/blogs')
-        .set("Authorization", `${token}`)
+        .set("Authorization", `Bearer ${token}`)
         .send(blogData)
         .expect(201)
     })
@@ -70,7 +70,7 @@ describe("My Blog API", () => {
       await updatedBlog.save()
       const {body} = await request(app)
         .patch(`/api/v1/blogs/${updatedBlog._id}`)
-        .set("Authorization", `${token}`)
+        .set("Authorization", `Bearer ${token}`)
         .send(updateBlogData)
         .expect(200)
     })

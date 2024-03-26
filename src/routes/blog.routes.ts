@@ -6,7 +6,7 @@ import imagesUpload from '../helpers/multer';
 
 const blogRoutes = express.Router();
 
-blogRoutes.post('/', auth.authenticateAdmin, imagesUpload, httpBlog.httpCreateBlog);
+blogRoutes.post('/',  auth.authenticateAdmin, imagesUpload, httpBlog.httpCreateBlog);
 blogRoutes.get('/', httpBlog.httpGetBlogs);
 blogRoutes.get('/:id', httpBlog.httpGetOneBlog );
 blogRoutes.patch('/:id', auth.authenticateAdmin, isValid, httpBlog.httpUpdateBlog);

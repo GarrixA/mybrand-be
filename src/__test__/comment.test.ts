@@ -54,7 +54,7 @@ describe('My Blogs API', ()=>{
             const body = await request(app)
                 .post(`/api/v1/blogs/${id}/comments`)
                 .send(commentData)
-                .set("Authorization", `${token}`)
+                .set("Authorization", `Bearer ${token}`)
                 .expect(201)
         })
     })

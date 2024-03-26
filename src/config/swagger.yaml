@@ -349,7 +349,7 @@ paths:
         "401":
           description: Unauthorized
         "404":
-          description: comment not found
+          description: blog not found
         "500":
           description: Internal server error
 
@@ -360,26 +360,23 @@ paths:
       description: Endpoint for creadding a like on a blog
       security:
         - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userId:
-                  type: string
-                  description: ID of the user who liked the blog
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: add a like
       responses:
         "201":
-          description: like Added successfully
+          description: Successfully added a like
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Likes'
-        '401':
+                $ref: "#/components/schemas/Likes"
+        "401":
           description: Unauthorized
-        '404':
-          description: blogId not found
-        '500':
-          description: Internal Server Error
+        "404":
+          description: blog not found
+        "500":
+          description: Internal server error
