@@ -5,23 +5,22 @@ import cloudinary from '../helpers/cloudnary';
 // create a blog
 const httpCreateBlog = async (req: Request, res: Response) => {
   try {
-    let uploadedImage = "";
-    if(req.file){
-      console.log(req.file)
-      const image = await cloudinary.uploader.upload(req.file.path)
-      uploadedImage = image.secure_url;
+    const image = req.file
+    if(!image){
+      return res.status(404).json({message: "image is required"})
     }
 
+    const uploadedImage = await cloudinary.uploader.upload(image.path);
     const blog = new Blog({
       title: req.body.title,
       description: req.body.description,
-      image: uploadedImage
-    });
-    console.log(uploadedImage)
-    await blog.save();
-    res.status(201).json({ message: 'Blog created', data: blog });
+      image: uploadedImage.secure_url
+    })
+
+    await blog.save()
+    res.status(201).json({message: "blog created", data: blog})
   } catch (error) {
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({message: "Internal Server Error"})
   }
 };
 
@@ -118,5 +117,6 @@ const httpLikeBlog = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 export default { httpCreateBlog, httpGetBlogs, httpGetOneBlog, httpUpdateBlog, httpDeleteBlog, httpLikeBlog };

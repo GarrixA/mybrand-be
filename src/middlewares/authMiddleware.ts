@@ -13,17 +13,17 @@ const verifyToken = async (req: AuthenticatedRequest, res: Response, next: NextF
 
   const token = authorizationHeader.split(" ")[1];
   if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(409).json({ error: "Forbiden" });
   }
-
 
   try {
     const decoded = jwt.verify(token, "my_secret_keyIs£1000Kand$1000K");
     req.user = decoded;
     next();
   } catch (error) {
-    return next(error);
+    return res.status(401).json({ error: "Unauthorized" });
   }
 };
+
 
 export default verifyToken;

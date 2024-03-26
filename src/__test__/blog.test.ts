@@ -21,7 +21,6 @@ describe("My Blog API", () => {
 
   afterAll(async () => {
     await userSchema.deleteMany();
-    await blogSchema.deleteMany();
     await mongoTestDisconnect();
   });
 

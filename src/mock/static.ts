@@ -1,12 +1,15 @@
+import path from "path";
+const imagePath = path.resolve(__dirname, "image.jpg");
+
 export const blogData = {
     title: "The arsenal fan",
     description: "Our manager is an arsenal fan for really",
-    image: "https://images.unsplash.com/photo-1707343843344-011332037abb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    image: imagePath
 }
 export const updateBlogData = {
     title: "Mancheter United fans",
     description: "Our manager is not a Manchester United fans for really",
-    image: "https://images.unsplash.com/photo-1707343843344-011332037abb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    image: imagePath
 }
 
 export const signupAdminData = {

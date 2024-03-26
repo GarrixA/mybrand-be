@@ -33,6 +33,23 @@ components:
         email: "kavuyo@gmail.com"
         password: "my@pass12"
 
+    Users:
+      type: object
+      properties:
+        username:
+          type: string
+          description: username
+        email:
+          type: string
+          description: email
+        password:
+          type: string
+          description: password
+      example:
+        username: "kavuyo"
+        email: "kavuyo@gmail.com"
+        password: "my@pass12"
+
     Login:
       type: object
       properties:
@@ -83,11 +100,24 @@ components:
           description: ID of the user who is liking the blog
       required:
         - userId
+
+    Queries:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of query owner
+        message:
+          type: string
+          description: message sent
+
 tags:
   - name: Users
     description: Endpoints users
   - name: Blogs
     description: Endpoints for blogs
+  - name: Queries
+    description: Endpoints for queries
 
 paths:
   /api/v1/users/register:
@@ -135,6 +165,57 @@ paths:
           description: Unauthorized
         "500":
           description: Internal Server Error
+
+  /api/v1/users:
+    get:
+      summary: Get all users
+      tags: [Users]
+      description: Endpoint to retrieve all users
+      security:
+        - BearerAuth: []
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        "401":
+          description: Unauthorized
+        "404":
+          description: users not found
+        "500":
+          description: Internal server error
+
+  /api/v1/users/{id}:
+    get:
+      summary: Get a single user
+      tags: [Users]
+      description: Endpoint to retrieve one user
+      operationId: getSingleBlog
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: id of a user to be retrieved
+      responses:
+        "200":
+          description: Successful found a user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        "401":
+          description: Unauthorized
+        "404":
+          description: user not found
+        "500":
+          description: Internal server error
 
   /api/v1/blogs:
     post:
@@ -185,8 +266,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Blogs"
-        "401":
-          description: Unauthorized
         "404":
           description: blog not found
         "500":
@@ -198,8 +277,6 @@ paths:
       tags: [Blogs]
       description: Endpoint to retrieve one blog
       operationId: getSingleBlog
-      security:
-        - BearerAuth: []
       parameters:
         - in: path
           name: id
@@ -383,3 +460,58 @@ paths:
           description: blog not found
         "500":
           description: Internal server error
+
+  /api/v1/queries:
+    get:
+      summary: Get all queries
+      tags: [Queries]
+      description: Endpoint to retrieve all queries
+      security:
+        - BearerAuth: []
+      operationId: getAllQueries
+      responses:
+        "200":
+          description: List of all queries
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Queries"
+        "401":
+          description: Unauthorized
+        "400":
+          description: bad request
+        "404":
+          description: query not found
+        "500":
+          description: Internal server error
+
+    post:
+      sammary: Create a query
+      tags: [Queries]
+      description: Endpoint for creadding a query
+      operationId: createQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: name of the sender
+                message:
+                  type: string
+                  description: message to be sent
+      responses:
+        '201':
+          description: query created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queries'
+        '400':
+          description: bad request
+        '500':
+          description: Internal Server Error
+      
