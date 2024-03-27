@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from "cloudinary";
-import { Request, Response } from "express";
 import dotenv from 'dotenv';
 dotenv.config();
 

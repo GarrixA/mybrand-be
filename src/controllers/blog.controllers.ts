@@ -17,8 +17,8 @@ const httpCreateBlog = async (req: Request, res: Response) => {
       image: uploadedImage.secure_url
     })
 
-    await blog.save()
-    res.status(201).json({message: "blog created", data: blog})
+    await blog.save();
+    return res.status(201).json({message: "blog created", data: blog})
   } catch (error) {
     res.status(500).json({message: "Internal Server Error"})
   }

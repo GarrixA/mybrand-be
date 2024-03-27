@@ -1,5 +1,5 @@
 import path from "path";
-const imagePath = path.resolve(__dirname, "image.jpg");
+const imagePath = path.resolve(__dirname, "abicar.png");
 
 export const blogData = {
     title: "The arsenal fan",

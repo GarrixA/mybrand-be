@@ -6,9 +6,9 @@ import {
 import app from "../app";
 import { blogData, loginAdminData, signupAdminData, updateBlogData } from "../mock/static";
 import userSchema from "../models/userSchema";
-import blogSchema from "../models/blogSchema";
 import Blog from '../models/blogSchema';
 import mongoose from "mongoose";
+import blogSchema from "../models/blogSchema";
 
 let token: string
 jest.setTimeout(10000);
@@ -21,6 +21,7 @@ describe("My Blog API", () => {
 
   afterAll(async () => {
     await userSchema.deleteMany();
+    await blogSchema.deleteMany();
     await mongoTestDisconnect();
   });
 
@@ -60,7 +61,9 @@ describe("My Blog API", () => {
       const {body} = await request(app)
         .post('/api/v1/blogs')
         .set("Authorization", `Bearer ${token}`)
-        .send(blogData)
+        .field("title", blogData.title)
+        .field("description", blogData.description)
+        .attach("image", blogData.image)
         .expect(201)
     })
 
