@@ -39,4 +39,5 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - run: npm run test:ci
     - run: npx update-badge
