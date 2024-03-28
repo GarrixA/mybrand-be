@@ -30,13 +30,11 @@ const httpCreateComment = async (req: Request, res: Response) => {
 
     const savedComment = await newComment.save();
 
-    blog.comments.push({
-      _id: savedComment._id,
-      username: savedComment.username,
-      content: savedComment.content,
-    });
+    blog.comments.push(savedComment._id);
     await blog.save();
-
+    // username: savedComment.username,
+    // content: savedComment.content,
+    
     res.status(201).json({
       message: "Comment created successfully",
       data: savedComment,

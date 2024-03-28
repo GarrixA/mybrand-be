@@ -31,16 +31,15 @@ const authenticateAdmin = async(req: ExpandedRequest, res: Response, next: NextF
 
 const authenticateUser = async(req: ExpandedRequest, res: Response, next: NextFunction) =>{
     const decoded = await verifyToken(req, res, next) as JwtPayload;
-
+    console.log(decoded);
     if(decoded){
-        req.userId = decoded.userId;
-        const id = req.userId;
-        const user = await userSchema.findById(id);
-        if (user?.role !== "user") {
-            return res.status(401).json({ message: "Only loged in person can perform this action" });
-        } else {
-            next();
-        }
+        req.userId = decoded;
+        // const id = req.userId;
+        // const user = await userSchema.findById(id);
+        // if (user?.role !== "user") {
+        //     return res.status(401).json({ message: "Only loged in person can perform this action" });
+        // } 
+        next();
     }
 }
 
