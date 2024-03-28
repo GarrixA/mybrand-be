@@ -4,9 +4,9 @@ const schema = mongoose.Schema;
 
 const CommentSchema = new schema(
   {
-    name: {
+    username: {
       type: String,
-      required: true,
+      required: false,
     },
     content: {
       type: String,

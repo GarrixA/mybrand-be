@@ -1,17 +1,21 @@
 import { Request, Response } from "express";
 import Comment from "../models/commentSchema";
 import Blog from "../models/blogSchema";
+import jwt, { JwtPayload } from "jsonwebtoken";
+
 
 // create comment
 const httpCreateComment = async (req: Request, res: Response) => {
   try {
     const blogId = req.params.id;
-    const name = req.body.name;
-    const content = req.body.content;
+    const token = req.headers.authorization?.split(" ")[1]; 
 
-    if (!blogId || !content || !name) {
+    if (!blogId || !req.body.content || !token) {
       return res.status(400).json({ error: "Missing required parameters" });
     }
+    
+    const decodedToken = jwt.verify(token, 'my_secret_keyIs£1000Kand$1000K') as JwtPayload;
+    const username = decodedToken.userId.username;
 
     const blog = await Blog.findById(blogId);
 
@@ -20,31 +24,31 @@ const httpCreateComment = async (req: Request, res: Response) => {
     }
 
     const newComment = new Comment({
-      name,
-      content,
+      username,
+      content: req.body.content,
     });
 
     const savedComment = await newComment.save();
 
     blog.comments.push({
       _id: savedComment._id,
-      name: savedComment.name,
+      username: savedComment.username,
       content: savedComment.content,
     });
     await blog.save();
 
-    res
-      .status(201)
-      .json({
-        message: "Comment created successfully",
-        data: savedComment,
-        blogId: blogId
-      });
+    res.status(201).json({
+      message: "Comment created successfully",
+      data: savedComment,
+      blogId: blogId
+    });
   } catch (error: any) {
-    console.error("Error creating comment:", error.message);
-    return res.status(500).json({ error: "Internal Server Error" });
+    console.log(error);
+    return res.status(500).json({ error: "Internal Ser" });
   }
 };
+
+
 
 // get all comments of a blog
 const httpGetCommentsOfBlog = async (req: Request, res: Response) => {

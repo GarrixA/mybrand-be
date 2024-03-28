@@ -47,7 +47,6 @@ describe('My Blogs API', ()=>{
             await newBlog.save();
             id = newBlog._id
             const commentData = {
-                name: "Rugamba",
                 content: "I like how you did it"
             }
 

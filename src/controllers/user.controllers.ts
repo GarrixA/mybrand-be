@@ -112,8 +112,13 @@ const httpLogin = async (req: Request, res: Response) => {
     user.status = 'active';
     await user.save();
 
+    const userData = {
+      username: user.username,
+      email: user.email,
+      role: user.role
+    }
     const token = jwt.sign(
-      { userId: user._id },
+      { userId: userData },
       "my_secret_keyIs£1000Kand$1000K"
     );
 
