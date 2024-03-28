@@ -16,8 +16,11 @@ const BlogSchema = new schema(
       type: String,
       required: true,
     },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Likes"}],
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: "Comments"}],
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    comments: [{type: {}}],
   },
   { timestamps: true }
 );

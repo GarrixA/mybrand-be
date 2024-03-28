@@ -6,20 +6,19 @@ interface AuthenticatedRequest extends Request {
 }
 
 const verifyToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-  const authorizationHeader = req.headers["authorization"]
+  const authorizationHeader = req.headers["authorization"];
   if (!authorizationHeader) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const token = authorizationHeader?.split(" ")[1];
+  const token = authorizationHeader.split(" ")[1];
   if (!token) {
     return res.status(409).json({ error: "Forbiden" });
   }
 
   try {
     const decoded = jwt.verify(token, "my_secret_keyIs£1000Kand$1000K");
-    // req.user = decoded;
-    return decoded
+    req.user = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ error: "Unauthorized" });
